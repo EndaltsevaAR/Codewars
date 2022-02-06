@@ -4,62 +4,63 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ObservedPin {
     public static void main(String[] args) {
-        String observed = "1234567890";
-       getPINs(observed);
-
+        String observed = "11";  //test
+        for (String s : getPINs(observed)) {
+            System.out.println(s);
+        }
     }
 
-    public static List<String> getPINs(String observed) {
-        System.out.println("");
+    public static List<String> getPINs(String observed) { // getPINs
         List<List<Integer>> variations = new ArrayList<>();
-
-       /* List<List<Integer>> keyBoard = new ArrayList<>();
-        keyBoard.add(Stream.of(1,2,3).collect(Collectors.toList()));
-        keyBoard.add(Stream.of(4,5,6).collect(Collectors.toList()));
-        keyBoard.add(Stream.of(7,8,9).collect(Collectors.toList()));*/
-
         List<String> numbers = Arrays.stream(observed.split("")).collect(Collectors.toList());
-
-        for (int i = 0; i < numbers.size(); i++) {
-            List<Integer> aroundButton = foundAroundButton(Integer.parseInt(numbers.get(i)));
-         //   variations = updateVariations(variations);
+        for (String number : numbers) {
+            List<Integer> aroundButton = foundAroundButton(Integer.parseInt(number));
+            variations = updateVariations(variations, aroundButton); // kata is solved by dynamic programming
         }
-
-      //  List<String> answer = textVariations(variations);
-return null;
-      //  return answer;
-    } // getPINs
+        return textVariations(variations);
+    }
 
     private static List<Integer> foundAroundButton(int number) {
         List<Integer> aroundNumbers = new ArrayList<>();
-        int y = number / 3;
-        int x = number % 3;
-        if (number == 0) {
+        if (number > 9) return null;   //number can not be bigger than 9
+        aroundNumbers.add(number);
+        if (number == 0) {             //around 0 button
             aroundNumbers.add(8);
         } else {
-            if (y - 1  >= 0) {
-                aroundNumbers.add(number - 3);
-            }
-            if (y + 1 <= 2) {
-                aroundNumbers.add(number + 3);
-            }
-            if (x - 1 >= 0) {
-                aroundNumbers.add(number - 1);
-            }
-            if (x + 1 <= 2) {
-                aroundNumbers.add(number + 1);
-            }
+            if (number - 3 > 0) aroundNumbers.add(number - 3);            //upper button
+            if (number + 3 < 10) aroundNumbers.add(number + 3);           //lower button
+            if ((number - 1) % 3 != 0) aroundNumbers.add(number - 1);     //left button
+            if (number % 3 != 0) aroundNumbers.add(number + 1);           //right button
         }
-        for (Integer integer :aroundNumbers) {
-            System.out.print(integer + " ");
+        if (number == 8) {
+            aroundNumbers.add(0);
         }
-        System.out.println(" ");
-
         return aroundNumbers;
     }
 
+    private static List<List<Integer>> updateVariations(List<List<Integer>> variations, List<Integer> aroundButton) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (variations.isEmpty()) {
+            variations.add(new ArrayList<>());
+        }
+        for (List<Integer> line : variations) {
+            for (Integer aroundButtonNumber : aroundButton) {
+                List<Integer> temp = new ArrayList<>(line);
+                temp.add(aroundButtonNumber);
+                result.add(temp);
+            }
+        }
+        return result;
+    }
+
+    private static List<String> textVariations(List<List<Integer>> variations) {
+        List<String> result = new ArrayList<>();
+        for (List<Integer> numbers : variations) {
+            result.add(numbers.stream().map(String::valueOf).collect(Collectors.joining()));
+        }
+        return result;
+    }
 }
