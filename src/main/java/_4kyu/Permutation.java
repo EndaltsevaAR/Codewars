@@ -1,3 +1,4 @@
+
 package _4kyu;
 
 /*
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Permutations {
+public class Permutation {
 
     public static List<String> singlePermutation(String s) {
         List<String> perm = new ArrayList<>();
@@ -44,3 +45,4 @@ public class Permutations {
         return begin + c + end;
     }
 }
+
