@@ -1,3 +1,5 @@
+package _4kyu;
+
 import org.junit.Test;
 
 import static _4kyu.Interval.sumIntervals;
