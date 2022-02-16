@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Permutation {
+public class Permutations {
 
-    public static List<String> singlePermutation(String s) {
+    public static List<String> singlePermutations(String s) {
         List<String> perm = new ArrayList<>();
         if (s == null) {
             return null;
@@ -30,7 +30,7 @@ public class Permutation {
         }
         char initial = s.charAt(0);
         String rem = s.substring(1);
-        List<String> words = singlePermutation(rem);
+        List<String> words = singlePermutations(rem);
         for (String strNew : words) {
             for (int i = 0; i <= strNew.length(); i++) {
                 perm.add(insertChar(strNew, initial, i));
