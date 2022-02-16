@@ -24,10 +24,10 @@ public class Interval {
                 sumOfLength += start[1] - start[0];
                 start = intervals[i];
             } else {                                                  //find min and max from both rows
-                int c[] = Arrays.copyOf(start, start.length + intervals[i].length);
-                System.arraycopy(intervals[i], 0, c, start.length, intervals[i].length);
-                Arrays.sort(c);
-                start = new int[]{c[0], c[c.length-1]};
+                int[] tempArray = Arrays.copyOf(start, start.length + intervals[i].length);
+                System.arraycopy(intervals[i], 0, tempArray, start.length, intervals[i].length);
+                Arrays.sort(tempArray);
+                start = new int[]{tempArray[0], tempArray[tempArray.length-1]};
             }
         }
 
