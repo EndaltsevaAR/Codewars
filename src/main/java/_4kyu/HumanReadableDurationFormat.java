@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HumanReadableDurationFormat {
+
     public static String formatDuration(int seconds) {
         if (seconds == 0) {
             return "now";
