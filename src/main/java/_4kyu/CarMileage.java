@@ -56,25 +56,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CarMileage {
-    /*public static void main(String[] args) {
-        int number = 1;
-        String str = String.valueOf(number);
-        int[] array = new int[0];
-        System.out.println(isInteresting(number, array));
-        System.out.println("zero: " + isAllZeroes(str));
-        System.out.println("same: " + isTheSame(str));
-        System.out.println("inc: " + isIncrement(str));
-        System.out.println("decr: " + isDecrement(str));
-        System.out.println("pall: " + isPalindrome(str));
-    }*/
 
     public static int isInteresting(int number, int[] awesomePhrases) {
-        System.out.println("number is: " + number);
-        for (Integer integer :awesomePhrases) {
-            System.out.println("ph is:" + integer);
-        }
-        System.out.println();
-       // if (number < 100 || number >= 1000000000) return 0;    //if illegal argument
         for (Integer phrase : awesomePhrases) {             //phrases checking
             if (number == phrase) {
                 return 2;
