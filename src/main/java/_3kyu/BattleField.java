@@ -35,11 +35,11 @@ public class BattleField {
         for (int y = 0; y < field.length; y++) {
             for (int x = 0; x < field[0].length; x++) {
                 if (IsStartOfShip(y, x, field)) { //find head of each ship
-                    List<Integer> shipsData = findShip(y, x, field);       //first - direction (boolean value - if there is horizontal: 1, vertical: 2, one cell:0, different: -1, second - size
-                    if (shipsData.get(0) == -1 || shipsData.get(1) > MAX_SHIP_SIZE ||
-                            shipsMap.get(shipsData.get(1)) == 0 || IsHasNeighbor(y, x, shipsData, field)) {
+                    List<Integer> shipData = findShip(y, x, field);       //first - direction (boolean value - if there is horizontal: 1, vertical: 2, one cell:0, different: -1, second - size
+                    if (shipData.get(0) == -1 || shipData.get(1) > MAX_SHIP_SIZE ||
+                            shipsMap.get(shipData.get(1)) == 0 || IsHasNeighbor(y, x, shipData, field)) {
                         return false;
-                    } else shipsMap.put(shipsData.get(1), shipsMap.get(shipsData.get(1)) - 1);
+                    } else shipsMap.put(shipData.get(1), shipsMap.get(shipData.get(1)) - 1);
                 }
             }
         }
