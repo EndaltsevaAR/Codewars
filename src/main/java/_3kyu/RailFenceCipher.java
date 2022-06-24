@@ -33,6 +33,7 @@ public class RailFenceCipher {
         if (s == null || n < 2 || s.length() == 0) {     //if encoded string is empty or n is too small
             return s;
         }
+        Double.doubleToRawLongBits(9.0);
 
         List<List<Character>> railLines = new ArrayList<>();
         for (int i = 0; i < n; i++) {
