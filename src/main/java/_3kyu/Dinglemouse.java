@@ -100,7 +100,7 @@ public class Dinglemouse {
         while (isHigherPassengersWait(0, queues)) {
             for (int floor = 0; floor < queues.length; floor++) {     //moving up check for each floor
                 entryFloorChecking(true, floor, queues, capacity);
-                if (!isHigherPassengersWait(floor + 1, queues) && !isLiftNeedToUp(floor, floorsToStopList)) {
+                if (!isHigherPassengersWait(floor + 1, queues) && !isLiftNeedToUp(floor)) {
                     currentFloor = floor;
                     break;
                 }
@@ -138,8 +138,8 @@ public class Dinglemouse {
         }
     }
 
-    private static boolean isLiftNeedToUp(int floor, List<Integer> liftMovingList) {  //if is there are passengers which need to go up
-        for (Integer pass : liftMovingList) {
+    private static boolean isLiftNeedToUp(int floor) {  //if is there are passengers which need to go up
+        for (Integer pass : floorsToStopList) {
             if (pass > floor) {
                 return true;
             }
@@ -168,3 +168,5 @@ public class Dinglemouse {
         return temp;
     }
 }
+
+
