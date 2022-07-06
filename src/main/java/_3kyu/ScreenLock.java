@@ -12,21 +12,27 @@ public class ScreenLock {
     }
 
     public int calculateCombinations(char startPosition, int patternLength) {
+        if (patternLength == 0) return 0;
         List<String> resultList = new ArrayList<>();
         resultList.add(Character.toString(startPosition));
-        for (int i = 0; i < patternLength; i++) {
+        for (int i = 1; i < patternLength; i++) {
             resultList = findNeighbor(resultList);
         }
+        for (String s :resultList) {
+            System.out.print(s + " ");
+        }
+
         return resultList.size();
     }
 
     private List<String> findNeighbor(List<String> resultList) {
         List<String> stepList = new ArrayList<>();  //поменять на стрингбилдеры
         for (String branch : resultList) {
+            List<Integer> lastCoordinates = findCoordinates(branch.charAt(branch.length() - 1));
             for (int y = 0; y < keyboard.length; y++) {
                 for (int x = 0; x < keyboard[0].length; x++) {
-                    List<Integer> lastCoordinates = findCoordinates(branch.charAt(branch.length() - 1));
-                    if (!branch.contains(Character.toString(keyboard[y][x])) && !isHaveOpenNeighbors(lastCoordinates.get(0), lastCoordinates.get(1), y, x, branch)) {
+                    if (!branch.contains(Character.toString(keyboard[y][x])) &&
+                            !isHaveOpenNeighbors(lastCoordinates.get(0), lastCoordinates.get(1), y, x, branch)) {
                         stepList.add(branch + keyboard[y][x]);
                     }
                 }
@@ -40,15 +46,16 @@ public class ScreenLock {
         List<Integer> xCoordinates = new ArrayList<>();
         boolean isYMove = false;
         boolean isXMove = false;
-        if ((yNewLetter - yFirst) % 2 == 0 && yNewLetter != yFirst) {
-            if ((xNewLetter - xFirst) % 2 == 0 && xNewLetter != xFirst) {
+        if ((Math.abs(yNewLetter - yFirst)) % 2 == 0 && (Math.abs(xNewLetter - xFirst))% 2 != 1 && yNewLetter != yFirst) {
+            if ((Math.abs(xNewLetter - xFirst)) % 2 == 0 && xNewLetter != xFirst ) {
                 isYMove = true;
                 isXMove = true;
             } else {
                 isYMove = true;
             }
-        } else {
+        } else if ((Math.abs(xNewLetter - xFirst)) % 2 == 0 && yNewLetter == yFirst && xNewLetter != xFirst) {
             isXMove = true;
+
         }
 
         if (isYMove) {
@@ -66,11 +73,19 @@ public class ScreenLock {
         for (int i = 0; i < Math.max(yCoordinates.size(), xCoordinates.size()); i++) {
             if (isYMove && isXMove) {
                 if (!branch.contains(Character.toString(keyboard[yCoordinates.get(i)][xCoordinates.get(i)]))) {
-                    return false;
+                    return true;
+                }
+            } else if (isYMove) {
+                if (!branch.contains(Character.toString(keyboard[yCoordinates.get(i)][xFirst]))) {
+                    return true;
+                }
+            } else if (isXMove) {
+                if (!branch.contains(Character.toString(keyboard[yFirst][xCoordinates.get(i)]))) {
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     private static List<Integer> findCoordinates(char startPosition) {
