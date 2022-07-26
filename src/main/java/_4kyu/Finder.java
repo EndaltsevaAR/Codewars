@@ -4,28 +4,13 @@ import java.util.*;
 
 public class Finder {
     public static void main(String[] args) {
-        String a = "..W.WW....WWW.W......\n" +
-                ".WW...W.....WW.W.W.W.\n" +
-                ".........W......W....\n" +
-                "..W.....W...WW.W..W..\n" +
-                "W.....W....W....WW...\n" +
-                ".WW.W.....W.W.W....W.\n" +
-                "W........WW...WWWW...\n" +
-                "WWW...W....W.....WWW.\n" +
-                "....WW....WW......WW.\n" +
-                ".W....W..W.W.........\n" +
-                "WW.....WW.W..........\n" +
-                "WW..WW.......W...WW.W\n" +
-                "W....W...WWWW..W.WW.W\n" +
-                ".WW.WW......WW.......\n" +
-                "W.WWW.........WWWW...\n" +
-                ".WW.W..W.W.W.......W.\n" +
-                "..W.....W...W....WWW.\n" +
-                ".W....W...WW....W.W.W\n" +
-                "...WW..W.WW.WWW..W...\n" +
-                "..W.W.W..W.W..WW.WW..\n" +
-                "...WWWWWW....W.W..WW.";
-        System.out.println(pathFinder(a));
+        String d = "......\n"+
+                "......\n"+
+                "......\n"+
+                "......\n"+
+                ".....W\n"+
+                "....W.";
+        System.out.println(pathFinder(d));
     }
     static Queue<Node> queueForChecking;
     static List<Node> checkedNodesList;
@@ -50,7 +35,7 @@ public class Finder {
         queueForChecking.addAll(neighbours);
         checkedNodesList.add(node);
 
-
+        int count = 0;
         while (!queueForChecking.isEmpty()) {
             Node neighbour = queueForChecking.poll();
             if (isFinish(neighbour)) {
@@ -67,20 +52,20 @@ public class Finder {
         List<Node> nodes = new ArrayList<>();
         Node up = new Node(node.getY() - 1, node.getX());
 
-        if (up.getY() >= 0 && !checkedNodesList.contains(up) && isRoad(up)) {
+        if (up.getY() >= 0 && !checkedNodesList.contains(up) && isRoad(up) && !queueForChecking.contains(up)) {
             nodes.add(up);
         }
         Node down = new Node(node.getY() + 1, node.getX());
-        if (down.getY() < mazeArray.length && !checkedNodesList.contains(down) && isRoad(down)) {
+        if (down.getY() < mazeArray.length && !checkedNodesList.contains(down) && isRoad(down) && !queueForChecking.contains(down) ) {
             nodes.add(down);
         }
         Node left = new Node(node.getY(), node.getX() - 1);
 
-        if (left.getX() >= 0 && !checkedNodesList.contains(left) && isRoad(left)) {
+        if (left.getX() >= 0 && !checkedNodesList.contains(left) && isRoad(left) && !queueForChecking.contains(left)) {
             nodes.add(left);
         }
         Node right = new Node(node.getY(), node.getX() + 1);
-        if (right.getX() < mazeArray[0].length && !checkedNodesList.contains(right) && isRoad(right)) {
+        if (right.getX() < mazeArray[0].length && !checkedNodesList.contains(right) && isRoad(right) && !queueForChecking.contains(right)) {
             nodes.add(right);
         }
         return nodes;
